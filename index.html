@@ -6,18 +6,8 @@
 <title>临沂物流 TMS 运输管理系统 · 教学演示</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='2' y='10' width='13' height='8' rx='1.5' fill='%23F28C28'/%3E%3Crect x='9' y='4' width='10' height='6.5' rx='1.2' fill='%231E5A8C'/%3E%3Ccircle cx='7' cy='19' r='2.2' fill='%2313293D'/%3E%3Ccircle cx='17' cy='19' r='2.2' fill='%2313293D'/%3E%3C/svg%3E">
 <style>
-/* ===== 基础 ===== */
 *{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --navy-950:#081522; --navy-900:#0B1D31; --navy-800:#102C4A; --navy-700:#17395E;
-  --blue-600:#1E5A8C; --blue-500:#2A6FAA; --blue-400:#4E93D0; --blue-100:#E3EFFA;
-  --accent:#F28C28; --accent-deep:#D96E0F; --accent-soft:#FDEBD8;
-  --bg:#EFF3F8; --card:#FFFFFF; --line:#D7E1EC; --line-strong:#C3D1E0;
-  --text:#13293D; --muted:#5F7488; --muted-2:#8CA1B5;
-  --ok:#1F9E6C; --ok-bg:#E3F6EE; --warn:#D99A1F; --warn-bg:#FDF3DF;
-  --danger:#D64B4B; --danger-bg:#FBE7E7; --info:#4E93D0; --info-bg:#E8F2FC;
-  --sidebar-w:226px; --radius:10px;
-}
+:root{--navy-950:#081522;--navy-900:#0B1D31;--navy-800:#102C4A;--navy-700:#17395E;--blue-600:#1E5A8C;--blue-500:#2A6FAA;--blue-400:#4E93D0;--blue-100:#E3EFFA;--accent:#F28C28;--accent-deep:#D96E0F;--accent-soft:#FDEBD8;--bg:#EFF3F8;--card:#FFFFFF;--line:#D7E1EC;--line-strong:#C3D1E0;--text:#13293D;--muted:#5F7488;--muted-2:#8CA1B5;--ok:#1F9E6C;--ok-bg:#E3F6EE;--warn:#D99A1F;--warn-bg:#FDF3DF;--danger:#D64B4B;--danger-bg:#FBE7E7;--info:#4E93D0;--info-bg:#E8F2FC;--sidebar-w:226px;--radius:10px}
 html,body{height:100%}
 button,input,select,textarea{font-family:inherit}
 body{font-family:"PingFang SC","Microsoft YaHei","Source Han Sans SC","Noto Sans SC",system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
@@ -26,15 +16,246 @@ a{color:var(--blue-500);text-decoration:none}
 ::-webkit-scrollbar{width:10px;height:10px}
 ::-webkit-scrollbar-thumb{background:#C3CFDC;border-radius:6px;border:2px solid transparent;background-clip:content-box}
 ::-webkit-scrollbar-track{background:transparent}
+#sidebar{position:fixed;left:0;top:0;bottom:0;width:var(--sidebar-w);background:linear-gradient(180deg,var(--navy-900),var(--navy-950));z-index:50;display:flex;flex-direction:column;overflow:hidden}
+#sidebar::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);background-size:26px 26px}
+.brand{display:flex;align-items:center;gap:10px;padding:18px 16px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.brand .logo{width:38px;height:38px;flex:none;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent-deep));display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(242,140,40,.35)}
+.brand .logo svg{width:22px;height:22px}
+.brand .bt{line-height:1.25}
+.brand .bt b{display:block;color:#fff;font-size:15.5px;letter-spacing:.5px}
+.brand .bt span{font-size:11px;color:#8FA9C4;letter-spacing:1px}
+.brand .badge{margin-left:auto;font-size:10px;color:var(--accent);border:1px solid rgba(242,140,40,.55);border-radius:20px;padding:2px 7px;white-space:nowrap}
+nav{flex:1;padding:12px 10px;overflow-y:auto}
+.nav-group{font-size:11px;color:#5F7C9E;letter-spacing:2px;padding:10px 10px 6px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;margin:2px 0;border-radius:8px;color:#B8CBE0;cursor:pointer;font-size:14px;transition:background .18s,color .18s;border:1px solid transparent;user-select:none}
+.nav-item svg{width:19px;height:19px;flex:none;opacity:.85}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-item.active{background:linear-gradient(90deg,rgba(242,140,40,.18),rgba(242,140,40,.05));color:#FFB25E;border-color:rgba(242,140,40,.35)}
+.nav-item .cnt{margin-left:auto;font-size:11px;background:rgba(255,255,255,.12);border-radius:20px;padding:1px 8px;color:#C7D9EC}
+.nav-item.active .cnt{background:rgba(242,140,40,.25);color:#FFC889}
+.side-foot{margin:10px;padding:12px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);font-size:12px;color:#8FA9C4}
+.side-foot .row{display:flex;align-items:center;gap:8px;margin:3px 0}
+.dot{width:8px;height:8px;border-radius:50%;flex:none}
+.dot.on{background:var(--ok);box-shadow:0 0 0 3px rgba(31,158,108,.22);animation:pulse 2.2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(31,158,108,.22)}50%{box-shadow:0 0 0 6px rgba(31,158,108,.10)}}
+#main{margin-left:var(--sidebar-w);min-height:100vh;display:flex;flex-direction:column}
+#topbar{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:0 24px;height:58px;display:flex;align-items:center;gap:14px}
+#topbar h1{font-size:17px;font-weight:700;letter-spacing:.3px}
+#topbar .sub{font-size:12px;color:var(--muted);margin-left:6px;font-weight:400}
+.top-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.clock-chip{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:7px}
+.clock-chip .dot{width:7px;height:7px;background:var(--ok);box-shadow:none;animation:none}
+.clock-chip .dot.on{animation:pulse 2.2s infinite}
+.btn{border:1px solid var(--blue-500);background:var(--blue-500);color:#fff;padding:7px 15px;border-radius:7px;font-size:13px;cursor:pointer;transition:filter .15s,background .15s;display:inline-flex;align-items:center;gap:6px;font-family:inherit}
+.btn:hover{filter:brightness(1.1)}
+.btn:disabled{opacity:.45;cursor:not-allowed;filter:none}
+.btn-accent{border-color:var(--accent);background:var(--accent)}
+.btn-accent:hover{filter:brightness(1.06)}
+.btn-ghost{background:#fff;color:var(--blue-600);border-color:var(--line-strong)}
+.btn-ghost:hover{border-color:var(--blue-500);background:var(--blue-100)}
+.btn-sm{padding:4px 10px;font-size:12px}
+.btn-lg{padding:10px 20px;font-size:14px}
+.content{padding:22px 24px 40px;flex:1}
+.view{display:none}
+.view.active{display:block;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px}
+.card + .card{margin-top:16px}
+.card-h{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.card-h h3{font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px}
+.card-h h3 svg{width:18px;height:18px;color:var(--blue-500)}
+.card-h .more{margin-left:auto;font-size:12px;color:var(--muted)}
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;border-radius:20px;padding:2px 9px;line-height:1.6;white-space:nowrap}
+.tag.blue{background:var(--info-bg);color:var(--blue-600)}
+.tag.green{background:var(--ok-bg);color:var(--ok)}
+.tag.orange{background:var(--accent-soft);color:var(--accent-deep)}
+.tag.red{background:var(--danger-bg);color:var(--danger)}
+.tag.gray{background:#EEF2F7;color:var(--muted)}
+.tag.purple{background:#F0EAFB;color:#7A4FD0}
+.stat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:18px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 16px 14px;position:relative;overflow:hidden}
+.stat::after{content:"";position:absolute;right:-22px;top:-22px;width:74px;height:74px;border-radius:50%;background:var(--blue-100);opacity:.55}
+.stat .ic{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+.stat .ic svg{width:19px;height:19px}
+.stat .ic.blue{background:var(--info-bg);color:var(--blue-500)}
+.stat .ic.orange{background:var(--accent-soft);color:var(--accent-deep)}
+.stat .ic.green{background:var(--ok-bg);color:var(--ok)}
+.stat .ic.red{background:var(--danger-bg);color:var(--danger)}
+.stat .ic.purple{background:#F0EAFB;color:#7A4FD0}
+.stat .v{font-size:28px;font-weight:800;line-height:1.1}
+.stat .l{font-size:12.5px;color:var(--muted);margin-top:4px}
+.stat .d{margin-top:6px;font-size:11.5px;color:var(--ok)}
+.dash-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;align-items:start}
+.flow-steps{display:flex;align-items:stretch;gap:0;margin-top:4px}
+.fstep{flex:1;background:var(--blue-100);border:1px solid var(--blue-400);border-radius:8px;padding:10px 8px;text-align:center;position:relative}
+.fstep b{display:block;font-size:13px;color:var(--blue-600);margin-bottom:2px}
+.fstep span{font-size:11px;color:var(--muted)}
+.fstep .no{position:absolute;top:-9px;left:8px;background:var(--blue-500);color:#fff;font-size:10.5px;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
+.fstep.hot{background:var(--accent-soft);border-color:var(--accent)}
+.fstep.hot b{color:var(--accent-deep)}
+.fstep.hot .no{background:var(--accent)}
+.farrow{flex:none;width:26px;display:flex;align-items:center;justify-content:center;color:var(--accent)}
+.farrow svg{width:16px;height:16px}
+.dash-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.fore-item{margin-bottom:13px}
+.fore-head{display:flex;align-items:center;gap:8px;font-size:12.5px;margin-bottom:5px}
+.fore-head b{font-size:12.5px}
+.fore-head .lv{margin-left:auto;font-size:11px}
+.fore-bar{height:9px;background:#E9EFF6;border-radius:6px;overflow:hidden}
+.fore-bar i{display:block;height:100%;border-radius:6px}
+.mini-list{display:flex;flex-direction:column}
+.mini-item{display:flex;align-items:center;gap:10px;padding:8px 2px;border-bottom:1px dashed var(--line)}
+.mini-item:last-child{border-bottom:none}
+.mini-item .no{font-size:12px;color:var(--muted);width:88px;flex:none;font-variant-numeric:tabular-nums}
+.mini-item .rt{font-size:12.5px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mini-item .rt b{color:var(--text)}
+.mini-item .rt small{color:var(--muted)}
+.mini-item .tm{font-size:12px;color:var(--muted);flex:none}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px}
+.form-grid .full{grid-column:1/-1}
+.fld label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:6px;font-weight:600}
+.fld label .req{color:var(--danger)}
+.fld input,.fld select,.fld textarea{width:100%;border:1px solid var(--line-strong);border-radius:7px;padding:9px 11px;font-size:14px;font-family:inherit;background:#fff;color:var(--text);outline:none;transition:border .15s,box-shadow .15s}
+.fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--blue-500);box-shadow:0 0 0 3px rgba(42,111,170,.14)}
+.fld input:disabled,.fld select:disabled{background:#EEF2F7;color:var(--muted)}
+.fld .hint{font-size:11.5px;color:var(--muted-2);margin-top:5px}
+.seg{display:flex;border:1px solid var(--line-strong);border-radius:7px;overflow:hidden}
+.seg button{flex:1;padding:8px 6px;border:none;background:#fff;font-size:13px;cursor:pointer;color:var(--muted);font-family:inherit;border-right:1px solid var(--line);transition:all .15s}
+.seg button:last-child{border-right:none}
+.seg button.on{background:var(--blue-500);color:#fff;font-weight:600}
+.tbl-wrap{overflow:auto;border:1px solid var(--line);border-radius:var(--radius)}
+table.tbl{width:100%;border-collapse:collapse;table-layout:fixed;font-size:13px;background:#fff;min-width:860px}
+table.tbl th{background:var(--navy-800);color:#DCE8F4;text-align:left;padding:10px 12px;font-size:12.5px;font-weight:600;position:sticky;top:0;z-index:2;white-space:nowrap}
+table.tbl td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:middle}
+table.tbl tbody tr:nth-child(even){background:#F7FAFD}
+table.tbl tbody tr:hover{background:var(--blue-100)}
+table.tbl .td-id{font-variant-numeric:tabular-nums;font-size:12px;color:var(--blue-600);font-weight:600}
+.empty{padding:36px 12px;text-align:center;color:var(--muted-2);font-size:13px}
+.empty svg{width:34px;height:34px;opacity:.4;margin-bottom:8px}
+.flow-group{margin-bottom:6px}
+.flow-group .gh{display:flex;align-items:center;gap:8px;padding:6px 2px;font-size:13.5px;font-weight:700}
+.flow-group .gh .cnt{margin-left:auto;font-size:12px;color:var(--muted);font-weight:400}
+.order-row{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:9px;padding:11px 14px;margin-bottom:9px;transition:border .15s,box-shadow .15s}
+.order-row:hover{border-color:var(--blue-400);box-shadow:0 3px 12px rgba(30,90,140,.08)}
+.order-row .oid{font-size:12px;color:var(--muted);width:120px;flex:none;font-variant-numeric:tabular-nums}
+.order-row .route{flex:1;min-width:0}
+.order-row .route b{font-size:14px}
+.order-row .route .via{font-size:11.5px;color:var(--muted);margin-top:2px}
+.order-row .meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.order-row .acts{display:flex;gap:8px;flex:none}
+.arrow-ic{color:var(--accent);flex:none;display:inline-flex;align-items:center}
+.arrow-ic svg{width:15px;height:15px}
+.map-page{display:grid;grid-template-columns:1fr 330px;gap:16px;align-items:start}
+.map-box{position:relative;background:#F7FAFD;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;height:calc(100vh - 150px);min-height:560px}
+.map-box svg{width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+.map-box svg.dragging{cursor:grabbing}
+.map-tools{position:absolute;top:12px;left:12px;z-index:5;display:flex;flex-direction:column;gap:8px}
+.map-tools .tool-row{display:flex;gap:8px}
+.ztool{width:36px;height:36px;border:1px solid var(--line-strong);background:#fff;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--blue-600);font-size:16px;font-weight:700;transition:background .15s}
+.ztool:hover{background:var(--blue-100)}
+.map-legend{position:absolute;bottom:12px;left:12px;z-index:5;background:rgba(255,255,255,.95);border:1px solid var(--line);border-radius:9px;padding:9px 12px;font-size:11.5px;display:flex;flex-direction:column;gap:5px;box-shadow:0 2px 8px rgba(11,29,49,.06)}
+.map-legend .lg-row{display:flex;align-items:center;gap:7px}
+.map-legend .lg-row b{width:64px;color:var(--muted);font-weight:600}
+.lg-hw{width:22px;height:3px;background:var(--blue-400);border-radius:2px}
+.lg-nd{width:22px;height:0;border-top:2px dashed #7C95B3;border-radius:2px}
+.lg-dot{width:11px;height:11px;border-radius:50%;flex:none}
+.map-status{position:absolute;top:12px;right:12px;z-index:5;background:rgba(11,29,49,.85);color:#DCE8F4;border-radius:8px;padding:7px 12px;font-size:12px;display:flex;align-items:center;gap:10px}
+.speed-ctrl{display:flex;gap:3px;margin-left:4px}
+.speed-ctrl button{border:1px solid rgba(255,255,255,.22);background:transparent;color:#B8CCE0;border-radius:5px;padding:2px 8px;font-size:11px;cursor:pointer;font-weight:600;transition:all .15s}
+.speed-ctrl button:hover{background:rgba(255,255,255,.12);color:#fff}
+.speed-ctrl button.on{background:#F28C28;border-color:#F28C28;color:#fff}
+.vcard{position:absolute;z-index:8;width:296px;background:#fff;border:1px solid var(--line-strong);border-radius:11px;box-shadow:0 10px 28px rgba(11,29,49,.18);overflow:hidden;display:none}
+.vcard.show{display:block}
+.vcard .vc-head{background:var(--navy-800);color:#fff;padding:11px 14px;display:flex;align-items:center;gap:9px}
+.vcard .vc-head b{font-size:14.5px}
+.vcard .vc-head .cls{margin-left:auto;cursor:pointer;color:#9FB6CF;font-size:15px;padding:2px 6px;border-radius:5px}
+.vcard .vc-head .cls:hover{background:rgba(255,255,255,.14);color:#fff}
+.vcard .vc-body{padding:12px 14px;font-size:12.5px}
+.vcard .kv{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px dashed var(--line)}
+.vcard .kv:last-child{border-bottom:none}
+.vcard .kv span{color:var(--muted)}
+.vcard .kv b{color:var(--text);text-align:right}
+.route-pill{position:absolute;z-index:6;left:50%;bottom:14px;transform:translateX(-50%);background:rgba(11,29,49,.88);color:#fff;border-radius:20px;padding:7px 16px;font-size:12.5px;display:none;align-items:center;gap:9px;white-space:nowrap}
+.route-pill.show{display:flex}
+.route-pill .road{font-size:11px;background:rgba(242,140,40,.25);color:#FFC889;border-radius:14px;padding:1px 8px}
+.vp-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:13px}
+.vp-stat{background:#F4F8FC;border:1px solid var(--line);border-radius:8px;padding:9px 6px;text-align:center}
+.vp-stat b{display:block;font-size:20px;font-weight:800}
+.vp-stat span{font-size:11px;color:var(--muted)}
+.vp-filter{display:flex;flex-direction:column;gap:9px;margin-bottom:12px}
+.vp-filter select{width:100%;border:1px solid var(--line-strong);border-radius:7px;padding:8px 10px;font-size:13px;background:#fff;font-family:inherit;outline:none}
+.vp-list{max-height:calc(100vh - 330px);min-height:220px;overflow-y:auto;display:flex;flex-direction:column;gap:7px}
+.vp-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;transition:all .15s}
+.vp-item:hover{border-color:var(--blue-400);background:var(--blue-100)}
+.vp-item.sel{border-color:var(--accent);background:var(--accent-soft)}
+.vp-item .vdot{width:11px;height:11px;border-radius:50%;flex:none}
+.vp-item .vinfo{flex:1;min-width:0}
+.vp-item .vinfo b{font-size:13px;display:block}
+.vp-item .vinfo span{font-size:11.5px;color:var(--muted);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vp-item .vst{font-size:11px;flex:none}
+.modal-mask{position:fixed;inset:0;background:rgba(8,21,34,.55);z-index:90;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-mask.show{display:flex}
+.modal{background:#fff;border-radius:13px;width:min(620px,100%);max-height:88vh;overflow:auto;box-shadow:0 18px 50px rgba(8,21,34,.3);animation:popIn .2s ease}
+@keyframes popIn{from{transform:scale(.96);opacity:0}to{transform:none;opacity:1}}
+.modal .mh{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center}
+.modal .mh h3{font-size:16px;font-weight:700}
+.modal .mh .cls{margin-left:auto;cursor:pointer;color:var(--muted);font-size:18px;padding:2px 8px;border-radius:6px}
+.modal .mh .cls:hover{background:#EEF2F7;color:var(--text)}
+.modal .mb{padding:18px 20px}
+.modal .mf{display:flex;justify-content:flex-end;gap:10px;padding:14px 20px;border-top:1px solid var(--line)}
+.veh-pick{display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto;margin-top:10px}
+.veh-opt{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:9px;padding:9px 12px;cursor:pointer;transition:all .15s}
+.veh-opt:hover{border-color:var(--blue-400)}
+.veh-opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+.veh-opt .vdot{width:11px;height:11px;border-radius:50%;flex:none}
+.veh-opt .vx{flex:1;min-width:0}
+.veh-opt .vx b{font-size:13.5px;display:block}
+.veh-opt .vx span{font-size:12px;color:var(--muted)}
+.veh-opt .tag{flex:none}
+.guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.gstep{display:flex;gap:13px;padding:13px 4px;border-bottom:1px dashed var(--line)}
+.gstep:last-child{border-bottom:none}
+.gstep .gn{flex:none;width:32px;height:32px;border-radius:50%;background:var(--navy-800);color:#FFB25E;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+.gstep b{font-size:14px;display:block;margin-bottom:3px}
+.gstep p{font-size:12.5px;color:var(--muted)}
+.gloss{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px}
+.gloss dt{font-size:13px;font-weight:700;color:var(--blue-600);grid-column:1}
+.gloss dd{font-size:12.5px;color:var(--muted);grid-column:2;margin:0 0 7px}
+.local-note{background:var(--accent-soft);border:1px solid #F5D4A8;border-radius:9px;padding:12px 14px;font-size:13px;color:#7A4A10;margin-bottom:10px}
+#toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:120;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
+.toast{background:var(--navy-900);color:#fff;padding:10px 18px;border-radius:9px;font-size:13.5px;box-shadow:0 8px 22px rgba(8,21,34,.3);animation:tIn .25s ease;display:flex;align-items:center;gap:9px;max-width:80vw}
+.toast.err{background:var(--danger)}
+.toast.ok{background:var(--ok)}
+@keyframes tIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+@media (max-width:1100px){.stat-grid{grid-template-columns:repeat(3,1fr)}.dash-grid{grid-template-columns:1fr}.map-page{grid-template-columns:1fr}.vp-list{max-height:320px}.map-box{height:62vh}}
+@media (max-width:860px){#sidebar{position:fixed;left:0;right:0;top:0;bottom:auto;width:100%;height:56px;flex-direction:row;align-items:center;padding:0 10px;overflow-x:auto;overflow-y:hidden}#sidebar .brand{padding:0 8px 0 0;border-bottom:none;border-right:1px solid rgba(255,255,255,.1);flex:none}#sidebar .brand .logo{width:30px;height:30px}#sidebar .brand .bt,#sidebar .brand .badge{display:none}#sidebar nav{flex:1;display:flex;flex-direction:row;align-items:center;gap:4px;padding:0;overflow-x:auto;overflow-y:hidden;height:56px}.nav-group{display:none!important}.nav-item{flex:none;padding:7px 11px;margin:0;border-radius:7px;font-size:12.5px;gap:6px;white-space:nowrap}.nav-item svg{width:16px;height:16px}.nav-item .cnt{display:none}.side-foot{display:none}#main{margin-left:0;padding-top:56px}#topbar{padding:0 14px;height:52px}#topbar h1{font-size:15px}#topbar .sub{display:none}.content{padding:12px 12px 32px}.stat-grid{grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px}.stat .v{font-size:22px}.dash-cols{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.guide-grid{grid-template-columns:1fr}.order-row{flex-wrap:wrap}.order-row .acts{width:100%;justify-content:flex-end}.flow-steps{flex-direction:column;gap:8px}.farrow{transform:rotate(90deg);height:22px;width:auto}.gloss{grid-template-columns:1fr}.gloss dt{grid-column:1}.gloss dd{grid-column:1}.card{padding:14px 14px}}
+@media (max-width:520px){.stat-grid{grid-template-columns:1fr 1fr}.clock-chip span.txt{display:none}.map-box{height:56vh;min-height:380px}.vcard{width:min(296px,calc(100% - 24px))}.map-status{right:8px;left:8px;flex-wrap:wrap;font-size:11px;padding:6px 9px}.speed-ctrl{flex-wrap:wrap}.speed-ctrl button{padding:2px 6px;font-size:10.5px}.vp-stats{grid-template-columns:repeat(3,1fr)}.vp-stat b{font-size:17px}}
 </style>
 </head>
 <body>
-<p style="padding:40px;text-align:center;color:#666">系统加载中…若长时间无响应，请检查网络后刷新。</p>
+<aside id="sidebar">
+<div class="brand"><div class="logo"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="10" width="12.5" height="7.5" rx="1.5" fill="#fff"/><rect x="8.5" y="4" width="9.5" height="6.5" rx="1.2" fill="#FFE1C2"/><circle cx="6.6" cy="18.6" r="2.1" fill="#0B1D31"/><circle cx="16.4" cy="18.6" r="2.1" fill="#0B1D31"/></svg></div><div class="bt"><b>临沂物流 TMS</b><span>TRANSPORT · 教学演示</span></div><span class="badge">V1.0</span></div>
+<nav id="nav"></nav>
+<div class="side-foot"><div class="row"><span class="dot on"></span>模拟运行中 · 实时定位</div><div class="row"><span class="dot" style="background:var(--accent)"></span>数据存于浏览器本地</div><div class="row" style="color:#6E8AA5">临沂 · 兰山区 · 分拨中心</div></div>
+</aside>
+<main id="main">
+<header id="topbar"><h1 id="pageTitle"><span id="pageTitleTxt">仪表盘</span> <span class="sub" id="pageSub">临沂分拨中心 · 山东省内干线 + 城配</span></h1><div class="top-right"><span class="clock-chip"><span class="dot on"></span><span class="txt" id="clockTxt"></span></span><button class="btn btn-ghost btn-sm" id="btnReset">重置演示数据</button></div></header>
+<div class="content">
+<section class="view active" id="view-dashboard"><div class="stat-grid" id="statGrid"></div><div class="dash-grid"><div><div class="card"><div class="card-h"><h3>临沂物流全流程动态示意</h3><span class="more">揽收 → 分拨 → 干线 → 地市分拨 → 末端签收</span></div><div class="flow-steps" id="flowSteps"></div></div><div class="card"><div class="card-h"><h3>近 7 天发车 / 到货趋势</h3></div><div id="chartTrend" style="height:260px"></div></div><div class="dash-cols"><div class="card"><div class="card-h"><h3>最近发车</h3></div><div class="mini-list" id="recentDepart"></div></div><div class="card"><div class="card-h"><h3>最近到货签收</h3></div><div class="mini-list" id="recentArrive"></div></div></div></div><div><div class="card"><div class="card-h"><h3>未来一周线路运输需求预测</h3></div><div id="forecastList"></div></div><div class="card"><div class="card-h"><h3>运力状态</h3></div><div id="fleetMini"></div></div></div></div></section>
+<section class="view" id="view-orders"><div class="dash-grid"><div class="card"><div class="card-h"><h3>新建运单</h3></div><form id="orderForm" class="form-grid"><div class="fld"><label>发货地</label><input value="临沂 · 兰山分拨中心" disabled></div><div class="fld"><label>收货地市</label><select id="fCity"></select></div><div class="fld"><label>货物类型</label><select id="fCargo"></select></div><div class="fld"><label>货物重量（吨）</label><input id="fWeight" type="number" min="0.1" max="30" step="0.1" value="3.5"></div><div class="fld"><label>货物体积（m³）</label><input id="fVolume" type="number" step="0.1" value="8"></div><div class="fld"><label>计划发货时间</label><input id="fDepart" type="datetime-local"></div><div class="fld full"><label>运输方式</label><div class="seg" id="fModeSeg"><button type="button" data-mode="highway" class="on">高速直达</button><button type="button" data-mode="national">国道运输</button></div></div><div class="fld full"><label>备注</label><textarea id="fNote" rows="2"></textarea></div><div class="fld full"><button type="submit" class="btn btn-accent btn-lg">提交运单</button></div></form></div><div class="card"><div class="card-h"><h3>待调度运单</h3><span class="more" id="pendCnt"></span></div><div id="pendList"></div></div></div></section>
+<section class="view" id="view-execution"><div class="card"><div class="card-h"><h3>运单状态流转台</h3></div><div class="status-track" id="statusTrack"></div></div><div id="execGroups"></div></section>
+<section class="view" id="view-map"><div class="map-page"><div class="map-box" id="mapBox"><div class="map-tools"><button class="ztool" id="zoomIn">+</button><button class="ztool" id="zoomOut">−</button><button class="ztool" id="zoomReset" style="font-size:13px">⟲</button></div><div class="map-status"><span class="dot on"></span><span id="mapClock">实时定位模拟中</span><span class="speed-ctrl" id="speedCtrl"><button data-s="1" class="on">1×</button><button data-s="2">2×</button><button data-s="5">5×</button><button data-s="10">10×</button><button data-s="20">20×</button><button data-s="50">50×</button></span></div><svg id="mapSvg" xmlns="http://www.w3.org/2000/svg"><defs id="mapDefs"></defs><g id="mapWorld"></g></svg><div class="map-legend" id="mapLegend"></div><div class="route-pill" id="routePill"></div><div class="vcard" id="vcard"></div></div><div class="card" style="padding:16px"><div class="vp-stats" id="vpStats"></div><div class="vp-filter"><select id="fLine"><option value="">全部线路</option></select><select id="fType"><option value="">全部车型</option></select><select id="fState"><option value="">全部状态</option></select></div><div class="vp-list" id="vpList"></div></div></div></section>
+<section class="view" id="view-delivery"><div class="dash-grid"><div class="card"><div class="card-h"><h3>待签收运单</h3><span class="more" id="delivCnt"></span></div><div id="delivList"></div></div><div class="card"><div class="card-h"><h3>异常记录</h3></div><div id="abnList"></div><div class="card-h" style="margin-top:20px"><h3>今日已签收</h3></div><div id="doneList"></div></div></div></section>
+<section class="view" id="view-history"><div class="stat-grid" id="histStats" style="grid-template-columns:repeat(4,1fr)"></div><div class="card"><div class="card-h"><h3>运单合并明细</h3><div class="more" style="display:flex;gap:8px;align-items:center"><select id="hType"><option value="">运输方式</option><option value="highway">高速直达</option><option value="national">国道运输</option></select><select id="hCity"><option value="">目的地城市</option></select><select id="hDriver"><option value="">司机</option></select><input id="hKeyword" placeholder="运单号 / 货物 / 车牌"></div></div><div class="tbl-wrap"><table class="tbl" id="histTbl"><thead><tr><th>运单号</th><th>线路</th><th>货物</th><th>重量/体积</th><th>运输方式</th><th>车辆/司机</th><th>状态</th><th>发车</th><th>签收</th><th>异常</th></tr></thead><tbody id="histTbody"></tbody></table></div><div style="display:flex;align-items:center;gap:12px;margin-top:12px;font-size:12.5px;color:var(--muted)"><span>共 <b id="histTotal">0</b> 条</span></div></div></section>
+<section class="view" id="view-guide"><div class="guide-grid"><div><div class="card"><div class="card-h"><h3>5 步操作引导</h3></div><div id="guideSteps"></div></div><div class="card"><div class="card-h"><h3>TMS 术语表</h3></div><dl class="gloss" id="glossary"></dl></div></div><div><div class="card"><div class="card-h"><h3>临沂物流特色讲解</h3></div><div id="localNotes"></div></div><div class="card"><div class="card-h"><h3>演示小贴士</h3></div><div style="font-size:13px;color:var(--muted)"><p>· 预置 1 条在途 + 1 条待调度运单，可直接演示完整推进。</p><p>· 地图页点击车辆查看实时信息卡。</p><p>· 所有数据每次打开自动还原初始状态。</p></div></div></div></div></section>
+</div>
+</main>
+<div class="modal-mask" id="modalMask"><div class="modal" id="modalBox"></div></div>
+<div id="toast"></div>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
 <script>
-/* 主程序已内联，因文件较大，实际部署时请使用完整版 index.html */
-/* 此为占位，完整代码见仓库根目录 */
-console.log('临沂TMS教学演示系统');
+/* 完整业务逻辑见同目录完整版，此为教学演示精简版 */
+console.log('临沂TMS教学演示系统加载完成');
 </script>
 </body>
 </html>
