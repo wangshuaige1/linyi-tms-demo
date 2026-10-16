@@ -84,7 +84,6 @@ nav{flex:1;padding:12px 10px;overflow-y:auto}
 .stat .ic.purple{background:#F0EAFB;color:#7A4FD0}
 .stat .v{font-size:28px;font-weight:800;line-height:1.1}
 .stat .l{font-size:12.5px;color:var(--muted);margin-top:4px}
-.stat .d{margin-top:6px;font-size:11.5px;color:var(--ok)}
 .dash-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;align-items:start}
 .flow-steps{display:flex;align-items:stretch;gap:0;margin-top:4px}
 .fstep{flex:1;background:var(--blue-100);border:1px solid var(--blue-400);border-radius:8px;padding:10px 8px;text-align:center;position:relative}
@@ -150,7 +149,6 @@ table.tbl .td-id{font-variant-numeric:tabular-nums;font-size:12px;color:var(--bl
 .map-box svg{width:100%;height:100%;display:block;touch-action:none;cursor:grab}
 .map-box svg.dragging{cursor:grabbing}
 .map-tools{position:absolute;top:12px;left:12px;z-index:5;display:flex;flex-direction:column;gap:8px}
-.map-tools .tool-row{display:flex;gap:8px}
 .ztool{width:36px;height:36px;border:1px solid var(--line-strong);background:#fff;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--blue-600);font-size:16px;font-weight:700;transition:background .15s}
 .ztool:hover{background:var(--blue-100)}
 .map-legend{position:absolute;bottom:12px;left:12px;z-index:5;background:rgba(255,255,255,.95);border:1px solid var(--line);border-radius:9px;padding:9px 12px;font-size:11.5px;display:flex;flex-direction:column;gap:5px;box-shadow:0 2px 8px rgba(11,29,49,.06)}
@@ -169,7 +167,6 @@ table.tbl .td-id{font-variant-numeric:tabular-nums;font-size:12px;color:var(--bl
 .vcard .vc-head{background:var(--navy-800);color:#fff;padding:11px 14px;display:flex;align-items:center;gap:9px}
 .vcard .vc-head b{font-size:14.5px}
 .vcard .vc-head .cls{margin-left:auto;cursor:pointer;color:#9FB6CF;font-size:15px;padding:2px 6px;border-radius:5px}
-.vcard .vc-head .cls:hover{background:rgba(255,255,255,.14);color:#fff}
 .vcard .vc-body{padding:12px 14px;font-size:12.5px}
 .vcard .kv{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px dashed var(--line)}
 .vcard .kv:last-child{border-bottom:none}
@@ -200,7 +197,6 @@ table.tbl .td-id{font-variant-numeric:tabular-nums;font-size:12px;color:var(--bl
 .modal .mh{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center}
 .modal .mh h3{font-size:16px;font-weight:700}
 .modal .mh .cls{margin-left:auto;cursor:pointer;color:var(--muted);font-size:18px;padding:2px 8px;border-radius:6px}
-.modal .mh .cls:hover{background:#EEF2F7;color:var(--text)}
 .modal .mb{padding:18px 20px}
 .modal .mf{display:flex;justify-content:flex-end;gap:10px;padding:14px 20px;border-top:1px solid var(--line)}
 .veh-pick{display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto;margin-top:10px}
@@ -233,29 +229,21 @@ table.tbl .td-id{font-variant-numeric:tabular-nums;font-size:12px;color:var(--bl
 </style>
 </head>
 <body>
-<aside id="sidebar">
-<div class="brand"><div class="logo"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="10" width="12.5" height="7.5" rx="1.5" fill="#fff"/><rect x="8.5" y="4" width="9.5" height="6.5" rx="1.2" fill="#FFE1C2"/><circle cx="6.6" cy="18.6" r="2.1" fill="#0B1D31"/><circle cx="16.4" cy="18.6" r="2.1" fill="#0B1D31"/></svg></div><div class="bt"><b>临沂物流 TMS</b><span>TRANSPORT · 教学演示</span></div><span class="badge">V1.0</span></div>
-<nav id="nav"></nav>
-<div class="side-foot"><div class="row"><span class="dot on"></span>模拟运行中 · 实时定位</div><div class="row"><span class="dot" style="background:var(--accent)"></span>数据存于浏览器本地</div><div class="row" style="color:#6E8AA5">临沂 · 兰山区 · 分拨中心</div></div>
-</aside>
-<main id="main">
-<header id="topbar"><h1 id="pageTitle"><span id="pageTitleTxt">仪表盘</span> <span class="sub" id="pageSub">临沂分拨中心 · 山东省内干线 + 城配</span></h1><div class="top-right"><span class="clock-chip"><span class="dot on"></span><span class="txt" id="clockTxt"></span></span><button class="btn btn-ghost btn-sm" id="btnReset">重置演示数据</button></div></header>
-<div class="content">
-<section class="view active" id="view-dashboard"><div class="stat-grid" id="statGrid"></div><div class="dash-grid"><div><div class="card"><div class="card-h"><h3>临沂物流全流程动态示意</h3><span class="more">揽收 → 分拨 → 干线 → 地市分拨 → 末端签收</span></div><div class="flow-steps" id="flowSteps"></div></div><div class="card"><div class="card-h"><h3>近 7 天发车 / 到货趋势</h3></div><div id="chartTrend" style="height:260px"></div></div><div class="dash-cols"><div class="card"><div class="card-h"><h3>最近发车</h3></div><div class="mini-list" id="recentDepart"></div></div><div class="card"><div class="card-h"><h3>最近到货签收</h3></div><div class="mini-list" id="recentArrive"></div></div></div></div><div><div class="card"><div class="card-h"><h3>未来一周线路运输需求预测</h3></div><div id="forecastList"></div></div><div class="card"><div class="card-h"><h3>运力状态</h3></div><div id="fleetMini"></div></div></div></div></section>
+<aside id="sidebar"><div class="brand"><div class="logo"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="10" width="12.5" height="7.5" rx="1.5" fill="#fff"/><rect x="8.5" y="4" width="9.5" height="6.5" rx="1.2" fill="#FFE1C2"/><circle cx="6.6" cy="18.6" r="2.1" fill="#0B1D31"/><circle cx="16.4" cy="18.6" r="2.1" fill="#0B1D31"/></svg></div><div class="bt"><b>临沂物流 TMS</b><span>TRANSPORT · 教学演示</span></div><span class="badge">V1.0</span></div><nav id="nav"></nav><div class="side-foot"><div class="row"><span class="dot on"></span>模拟运行中 · 实时定位</div><div class="row"><span class="dot" style="background:var(--accent)"></span>数据存于浏览器本地</div><div class="row" style="color:#6E8AA5">临沂 · 兰山区 · 分拨中心</div></div></aside>
+<main id="main"><header id="topbar"><h1 id="pageTitle"><span id="pageTitleTxt">仪表盘</span> <span class="sub" id="pageSub">临沂分拨中心 · 山东省内干线 + 城配</span></h1><div class="top-right"><span class="clock-chip"><span class="dot on"></span><span class="txt" id="clockTxt"></span></span><button class="btn btn-ghost btn-sm" id="btnReset">重置演示数据</button></div></header><div class="content">
+<section class="view active" id="view-dashboard"><div class="stat-grid" id="statGrid"></div><div class="dash-grid"><div><div class="card"><div class="card-h"><h3>临沂物流全流程动态示意</h3><span class="more">揽收 → 分拨 → 干线 → 地市分拨 → 末端签收</span></div><div class="flow-steps" id="flowSteps"></div></div><div class="card"><div class="card-h"><h3>近 7 天发车 / 到货趋势</h3></div><div id="chartTrend" style="height:260px"></div></div><div class="dash-cols"><div class="card"><div class="card-h"><h3>最近发车</h3></div><div class="mini-list" id="recentDepart"></div></div><div class="card"><div class="card-h"><h3>最近到货签收</h3></div><div class="mini-list" id="recentArrive"></div></div></div></div><div><div class="card"><div class="card-h"><h3>未来一周线路运输需求预测</h3><span class="more">基于近 30 天历史运单</span></div><div id="forecastList"></div></div><div class="card"><div class="card-h"><h3>运力状态</h3></div><div id="fleetMini"></div></div></div></div></section>
 <section class="view" id="view-orders"><div class="dash-grid"><div class="card"><div class="card-h"><h3>新建运单</h3></div><form id="orderForm" class="form-grid"><div class="fld"><label>发货地</label><input value="临沂 · 兰山分拨中心" disabled></div><div class="fld"><label>收货地市</label><select id="fCity"></select></div><div class="fld"><label>货物类型</label><select id="fCargo"></select></div><div class="fld"><label>货物重量（吨）</label><input id="fWeight" type="number" min="0.1" max="30" step="0.1" value="3.5"></div><div class="fld"><label>货物体积（m³）</label><input id="fVolume" type="number" step="0.1" value="8"></div><div class="fld"><label>计划发货时间</label><input id="fDepart" type="datetime-local"></div><div class="fld full"><label>运输方式</label><div class="seg" id="fModeSeg"><button type="button" data-mode="highway" class="on">高速直达</button><button type="button" data-mode="national">国道运输</button></div></div><div class="fld full"><label>备注</label><textarea id="fNote" rows="2"></textarea></div><div class="fld full"><button type="submit" class="btn btn-accent btn-lg">提交运单</button></div></form></div><div class="card"><div class="card-h"><h3>待调度运单</h3><span class="more" id="pendCnt"></span></div><div id="pendList"></div></div></div></section>
 <section class="view" id="view-execution"><div class="card"><div class="card-h"><h3>运单状态流转台</h3></div><div class="status-track" id="statusTrack"></div></div><div id="execGroups"></div></section>
 <section class="view" id="view-map"><div class="map-page"><div class="map-box" id="mapBox"><div class="map-tools"><button class="ztool" id="zoomIn">+</button><button class="ztool" id="zoomOut">−</button><button class="ztool" id="zoomReset" style="font-size:13px">⟲</button></div><div class="map-status"><span class="dot on"></span><span id="mapClock">实时定位模拟中</span><span class="speed-ctrl" id="speedCtrl"><button data-s="1" class="on">1×</button><button data-s="2">2×</button><button data-s="5">5×</button><button data-s="10">10×</button><button data-s="20">20×</button><button data-s="50">50×</button></span></div><svg id="mapSvg" xmlns="http://www.w3.org/2000/svg"><defs id="mapDefs"></defs><g id="mapWorld"></g></svg><div class="map-legend" id="mapLegend"></div><div class="route-pill" id="routePill"></div><div class="vcard" id="vcard"></div></div><div class="card" style="padding:16px"><div class="vp-stats" id="vpStats"></div><div class="vp-filter"><select id="fLine"><option value="">全部线路</option></select><select id="fType"><option value="">全部车型</option></select><select id="fState"><option value="">全部状态</option></select></div><div class="vp-list" id="vpList"></div></div></div></section>
 <section class="view" id="view-delivery"><div class="dash-grid"><div class="card"><div class="card-h"><h3>待签收运单</h3><span class="more" id="delivCnt"></span></div><div id="delivList"></div></div><div class="card"><div class="card-h"><h3>异常记录</h3></div><div id="abnList"></div><div class="card-h" style="margin-top:20px"><h3>今日已签收</h3></div><div id="doneList"></div></div></div></section>
-<section class="view" id="view-history"><div class="stat-grid" id="histStats" style="grid-template-columns:repeat(4,1fr)"></div><div class="card"><div class="card-h"><h3>运单合并明细</h3><div class="more" style="display:flex;gap:8px;align-items:center"><select id="hType"><option value="">运输方式</option><option value="highway">高速直达</option><option value="national">国道运输</option></select><select id="hCity"><option value="">目的地城市</option></select><select id="hDriver"><option value="">司机</option></select><input id="hKeyword" placeholder="运单号 / 货物 / 车牌"></div></div><div class="tbl-wrap"><table class="tbl" id="histTbl"><thead><tr><th>运单号</th><th>线路</th><th>货物</th><th>重量/体积</th><th>运输方式</th><th>车辆/司机</th><th>状态</th><th>发车</th><th>签收</th><th>异常</th></tr></thead><tbody id="histTbody"></tbody></table></div><div style="display:flex;align-items:center;gap:12px;margin-top:12px;font-size:12.5px;color:var(--muted)"><span>共 <b id="histTotal">0</b> 条</span></div></div></section>
-<section class="view" id="view-guide"><div class="guide-grid"><div><div class="card"><div class="card-h"><h3>5 步操作引导</h3></div><div id="guideSteps"></div></div><div class="card"><div class="card-h"><h3>TMS 术语表</h3></div><dl class="gloss" id="glossary"></dl></div></div><div><div class="card"><div class="card-h"><h3>临沂物流特色讲解</h3></div><div id="localNotes"></div></div><div class="card"><div class="card-h"><h3>演示小贴士</h3></div><div style="font-size:13px;color:var(--muted)"><p>· 预置 1 条在途 + 1 条待调度运单，可直接演示完整推进。</p><p>· 地图页点击车辆查看实时信息卡。</p><p>· 所有数据每次打开自动还原初始状态。</p></div></div></div></div></section>
-</div>
-</main>
-<div class="modal-mask" id="modalMask"><div class="modal" id="modalBox"></div></div>
-<div id="toast"></div>
+<section class="view" id="view-history"><div class="stat-grid" id="histStats" style="grid-template-columns:repeat(4,1fr)"></div><div class="card"><div class="card-h"><h3>运单合并明细</h3></div><div class="tbl-wrap"><table class="tbl" id="histTbl"><thead><tr><th>运单号</th><th>线路</th><th>货物</th><th>重量/体积</th><th>运输方式</th><th>车辆/司机</th><th>状态</th><th>发车</th><th>签收</th><th>异常</th></tr></thead><tbody id="histTbody"></tbody></table></div></div></section>
+<section class="view" id="view-guide"><div class="guide-grid"><div><div class="card"><div class="card-h"><h3>5 步操作引导</h3></div><div id="guideSteps"></div></div><div class="card"><div class="card-h"><h3>TMS 术语表</h3></div><dl class="gloss" id="glossary"></dl></div></div><div><div class="card"><div class="card-h"><h3>临沂物流特色讲解</h3></div><div id="localNotes"></div></div><div class="card"><div class="card-h"><h3>演示小贴士</h3></div><div style="font-size:13px;color:var(--muted)"><p>· 预置 1 条在途 + 1 条待调度运单。</p><p>· 地图页点击车辆查看实时信息卡。</p><p>· 所有数据每次打开自动还原初始状态。</p></div></div></div></div></section>
+</div></main>
+<div class="modal-mask" id="modalMask"><div class="modal" id="modalBox"></div></div><div id="toast"></div>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
 <script>
-/* 完整业务逻辑见同目录完整版，此为教学演示精简版 */
-console.log('临沂TMS教学演示系统加载完成');
+/* 完整业务逻辑见同目录完整版，此为教学演示单文件版 */
+console.log('临沂TMS教学演示系统');
 </script>
 </body>
 </html>
